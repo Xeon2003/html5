@@ -1,5 +1,4 @@
-# -*- coding: utf-8 -*-
-import html5
+from lib import *
 
 def unescape(val, maxLength = 0):
 	"""
@@ -54,7 +53,7 @@ def doesEventHitWidgetOrChildren(event, widget):
 def textToHtml(node, text):
 	"""
 	Generates html nodes from text by splitting text into content and into
-	line breaks html5.Br.
+	line breaks Br.
 
 	:param node: The node where the nodes are appended to.
 	:param text: The text to be inserted.
@@ -62,6 +61,6 @@ def textToHtml(node, text):
 
 	for (i, part) in enumerate(text.split("\n")):
 		if i > 0:
-			node.appendChild(html5.Br())
+			node.appendChild(Br())
 
-		node.appendChild(html5.TextNode(part))
+		node.appendChild(TextNode(part))

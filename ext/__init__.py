@@ -1,3 +1,3 @@
-from html5.ext.button import Button
-from html5.ext.inputdialog import InputDialog
-from html5.ext.popup import Popup, Alert, YesNoDialog, SelectDialog
+from .button import Button
+from .inputdialog import InputDialog
+from .popup import Popup, Alert, YesNoDialog, SelectDialog

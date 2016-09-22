@@ -1,18 +1,18 @@
-import html5
-from html5.ext.popup import Popup
-from html5.ext.button import Button
+from ..lib import *
+from .popup import Popup
+from .button import Button
 
-class InputDialog( Popup ):
+class InputDialog(Popup):
 	def __init__(self, text, value="", successHandler=None, abortHandler=None, successLbl="OK", abortLbl="Cancel", *args, **kwargs ):
 		super( InputDialog, self ).__init__(*args, **kwargs)
 		self["class"].append("inputdialog")
 		self.successHandler = successHandler
 		self.abortHandler = abortHandler
 
-		span = html5.Span()
+		span = Span()
 		span.element.innerHTML = text
 		self.appendChild(span)
-		self.inputElem = html5.Input()
+		self.inputElem = Input()
 		self.inputElem["type"] = "text"
 		self.inputElem["value"] = value
 		self.appendChild( self.inputElem )

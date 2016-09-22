@@ -1,6 +1,6 @@
-from html5.form import Textarea as fTextarea
+from ..lib import *
 
-class Input(fTextarea):
+class Input(Textarea):
 	def __init__(self, placeholder=None, callback=None, id=None, *args, **kwargs):
 		"""
 

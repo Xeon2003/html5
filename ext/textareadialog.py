@@ -1,18 +1,17 @@
-import html5
-from html5.ext.popup import Popup
-from html5.ext.button import Button
+from ..lib import *
+from popup import Popup
 
-class TextareaDialog( Popup ):
+class TextareaDialog(Popup):
 	def __init__(self, text, value="", successHandler=None, abortHandler=None, successLbl="OK", abortLbl="Cancel", *args, **kwargs ):
 		super( TextareaDialog, self ).__init__(*args, **kwargs)
 		self["class"].append("textareadialog")
 		self.successHandler = successHandler
 		self.abortHandler = abortHandler
 
-		span = html5.Span()
+		span = Span()
 		span.element.innerHTML = text
 		self.appendChild(span)
-		self.inputElem = html5.Textarea()
+		self.inputElem = Textarea()
 		self.inputElem["value"] = value
 		self.appendChild( self.inputElem )
 		okayBtn = Button(successLbl, self.onOkay)

@@ -1,27 +1,29 @@
-import html5
+from ..lib import *
+from ..utils import *
+from button import Button
 
-class Popup(html5.Div):
+class Popup(Div):
 	def __init__(self, title=None, id=None, *args, **kwargs ):
 		super(Popup, self).__init__(*args, **kwargs)
 
 		self["class"] = "alertbox"
 		if title:
-			lbl = html5.Span()
+			lbl = Span()
 			lbl["class"].append("title")
-			lbl.appendChild( html5.TextNode( title ) )
+			lbl.appendChild( TextNode( title ) )
 			self.appendChild( lbl )
 
 		# id can be used to pass information to callbacks
 		self.id = id
 
-		self.frameDiv = html5.Div()
+		self.frameDiv = Div()
 		self.frameDiv["class"] = "popup"
 
 		self.frameDiv.appendChild( self )
-		html5.Body().appendChild( self.frameDiv )
+		Body().appendChild( self.frameDiv )
 
 	def close(self, *args, **kwargs):
-		html5.Body().removeChild( self.frameDiv )
+		Body().removeChild( self.frameDiv )
 		self.frameDiv = None
 
 class Alert(Popup):
@@ -34,16 +36,16 @@ class Alert(Popup):
 
 		self.okCallback = okCallback
 
-		message = html5.Span()
+		message = Span()
 		message.addClass("alert-msg")
 		self.appendChild(message)
 
-		if isinstance(msg, html5.Widget):
+		if isinstance(msg, Widget):
 			message.appendChild(msg)
 		else:
-			html5.utils.textToHtml(message, msg)
+			textToHtml(message, msg)
 
-		okBtn = html5.ext.Button(okLabel, callback=self.onOkBtnClick)
+		okBtn = Button(okLabel, callback=self.onOkBtnClick)
 		okBtn.addClass("alert-btn-ok")
 		self.appendChild(okBtn)
 
@@ -81,21 +83,21 @@ class YesNoDialog( Popup ):
 		self.yesCallback = yesCallback
 		self.noCallback = noCallback
 
-		lbl = html5.Span()
+		lbl = Span()
 		lbl["class"].append("question")
 		self.appendChild(lbl)
 
-		if isinstance(question, html5.Widget):
+		if isinstance(question, Widget):
 			lbl.appendChild(question)
 		else:
-			html5.utils.textToHtml(lbl, question)
+			textToHtml(lbl, question)
 
-		btnYes = html5.ext.Button(yesLabel, callback=self.onYesClicked )
+		btnYes = Button(yesLabel, callback=self.onYesClicked )
 		btnYes["class"].append("btn_yes")
 		self.appendChild(btnYes)
 
 		if len(noLabel):
-			btnNo = html5.ext.Button(noLabel, callback=self.onNoClicked )
+			btnNo = Button(noLabel, callback=self.onNoClicked )
 			btnNo["class"].append("btn_no")
 			self.appendChild(btnNo)
 
@@ -148,9 +150,9 @@ class SelectDialog( Popup ):
 
 		# Prompt
 		if prompt:
-			lbl = html5.Span()
+			lbl = Span()
 			lbl[ "class" ].append( "prompt" )
-			lbl.appendChild( html5.TextNode( prompt ) )
+			lbl.appendChild( TextNode( prompt ) )
 			self.appendChild( lbl )
 
 		# Items
@@ -158,7 +160,7 @@ class SelectDialog( Popup ):
 
 		if not forceSelect and len( items ) <= 3:
 			for item in items:
-				btn = html5.ext.Button( item.get( "title" ), callback=self.onAnyBtnClick )
+				btn = Button( item.get( "title" ), callback=self.onAnyBtnClick )
 				btn._callback = item.get( "callback" )
 
 				if item.get( "class" ):
@@ -167,24 +169,24 @@ class SelectDialog( Popup ):
 				self.appendChild( btn )
 				self.items.append( btn )
 		else:
-			self.select = html5.Select()
+			self.select = Select()
 			self.appendChild( self.select )
 
 			for i, item in enumerate( items ):
-				opt = html5.Option()
+				opt = Option()
 
 				opt[ "value" ] = str( i )
 				opt._callback = item.get( "callback" )
-				opt.appendChild( html5.TextNode( item.get( "title" ) ) )
+				opt.appendChild( TextNode( item.get( "title" ) ) )
 
 				self.select.appendChild( opt )
 				self.items.append( opt )
 
 			if okBtn:
-				self.appendChild( html5.ext.Button( okBtn, callback=self.onOkClick ) )
+				self.appendChild( Button( okBtn, callback=self.onOkClick ) )
 
 			if cancelBtn:
-				self.appendChild( html5.ext.Button( cancelBtn, callback=self.onCancelClick ) )
+				self.appendChild( Button( cancelBtn, callback=self.onCancelClick ) )
 
 	def onAnyBtnClick( self, sender = None ):
 		for btn in self.items:
