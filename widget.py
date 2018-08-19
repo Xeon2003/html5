@@ -228,11 +228,11 @@ class Widget(object):
 					self._disabledState = None
 
 		if self._getDisabled():
-			if not "is_disabled" in self["class"]:
-				self["class"].append("is_disabled")
+			if not "is-disabled" in self["class"]:
+				self["class"].append("is-disabled")
 		else:
-			if "is_disabled" in self["class"]:
-				self["class"].remove("is_disabled")
+			if "is-disabled" in self["class"]:
+				self["class"].remove("is-disabled")
 
 	def _getTargetFuncName(self, key, type):
 		assert type in ["get", "set"]
